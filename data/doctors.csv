@@ -1,0 +1,11 @@
+doctor_id,clinic_id,name,specialty,symptoms_handled
+D1,C1,Dr. Nguyễn Văn A,Nội Khoa,sốt;ho;đau đầu;mệt mỏi
+D2,C1,Dr. Trần Thị B,Nhi Khoa,sốt trẻ em;tiêu chảy trẻ em;biếng ăn
+D3,C2,Dr. Lê Văn C,Da Liễu,ngứa;nổi mẩn đỏ;mụn nhọt
+D4,C2,Dr. Phạm Thị D,Nha Khoa,đau răng;sâu răng;chảy máu chân răng
+D5,C3,Dr. Hoàng Văn E,Nội Khoa,sốt;ho;đau đầu;khó thở
+D6,C3,Dr. Võ Thị F,Sản Phụ Khoa,đau bụng dưới;rối loạn kinh nguyệt
+D7,C4,Dr. Đặng Văn G,Tim Mạch,đau thắt ngực;tim đập nhanh;khó thở
+D8,C4,Dr. Bùi Thị H,Thần Kinh,đau đầu kinh niên;chóng mặt;mất ngủ
+D9,C5,Dr. Ngô Văn I,Tai Mũi Họng,đau họng;sổ mũi;ù tai
+D10,C5,Dr. Dương Thị K,Mắt,nhức mắt;đỏ mắt;mờ mắt

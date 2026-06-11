@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HealthCare - Đặt Lịch Khám Online</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --secondary: #0d9488;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --danger: #ef4444;
+            --success: #22c55e;
+            --warning: #f59e0b;
+            --border: #e2e8f0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background-color: var(--bg);
+            margin: 0;
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        nav {
+            background: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .btn-logout {
+            color: var(--danger);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+
+        .btn-logout:hover {
+            background: #fee2e2;
+        }
+
+        /* Main Layout */
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 900px) {
+            .container { grid-template-columns: 1fr; }
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+            border: 1px solid var(--border);
+        }
+
+        h2 {
+            margin-top: 0;
+            font-size: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #0f172a;
+        }
+
+        /* Form Styling */
+        .form-group { margin-bottom: 1.5rem; }
+        label { 
+            display: block; 
+            font-weight: 600; 
+            margin-bottom: 8px; 
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1.5px solid var(--border);
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.2s;
+            box-sizing: border-box;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 10px;
+            font-weight: 700;
+            width: 100%;
+            cursor: pointer;
+            transition: transform 0.1s, background 0.2s;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-hover);
+            transform: translateY(-1px);
+        }
+
+        /* Appointment List */
+        .appt-item {
+            padding: 1.25rem;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.2s;
+        }
+
+        .appt-item:hover {
+            border-color: var(--primary);
+            background: #f8fafc;
+        }
+
+        .appt-info h4 { margin: 0; color: var(--text-main); }
+        .appt-info p { margin: 4px 0 0; font-size: 0.85rem; color: var(--text-muted); }
+
+        .btn-cancel {
+            background: #fee2e2;
+            color: var(--danger);
+            border: none;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-cancel:hover { background: #fecaca; }
+
+        /* Result Alerts */
+        .alert {
+            padding: 1rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .alert-success { background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
+        .alert-warning { background: #fef3c7; color: #92400e; border: 1px solid #fde68a; }
+        .alert-error { background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
+
+        .doctor-badge {
+            background: #e0f2fe;
+            color: #0369a1;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-top: 8px;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo">
+            <i class="fas fa-heart-pulse"></i> HealthCare
+        </div>
+        <div class="user-info">
+            <span>Xin chào, <strong>{{ patient_name }}</strong></span>
+            <a href="/logout" class="btn-logout"><i class="fas fa-sign-out-alt"></i> Thoát</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Section 1: Booking Form -->
+        <div class="card">
+            <h2><i class="fas fa-calendar-plus" style="color: var(--primary);"></i> Đặt Lịch Hẹn Mới</h2>
+            <form action="/book" method="POST">
+                <div class="form-group">
+                    <label><i class="fas fa-stethoscope"></i> CHUYÊN KHOA</label>
+                    <select name="specialty">
+                        <option value="Tất cả">Tất cả chuyên khoa</option>
+                        {% for spec in specialties %}
+                        <option value="{{ spec }}">{{ spec }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label><i class="fas fa-comment-medical"></i> TRIỆU CHỨNG (TÙY CHỌN)</label>
+                    <input type="text" name="symptoms" placeholder="Ví dụ: đau đầu, mệt mỏi, ho...">
+                </div>
+
+                <div class="form-group">
+                    <label><i class="fas fa-clock"></i> THỜI GIAN MONG MUỐN</label>
+                    <input type="datetime-local" name="desired_time" required>
+                </div>
+
+                <button type="submit" class="btn-primary">
+                    <i class="fas fa-search"></i> Tìm Bác Sĩ & Đặt Ngay
+                </button>
+            </form>
+        </div>
+
+        <!-- Section 2: Appointments & Results -->
+        <div>
+            {% if result %}
+            <div class="alert alert-{{ result.type }}">
+                <i class="fas {% if result.type == 'success' %}fa-check-circle{% elif result.type == 'warning' %}fa-exclamation-triangle{% else %}fa-times-circle{% endif %}" style="font-size: 1.5rem;"></i>
+                <div>
+                    <strong style="display: block;">{{ result.message }}</strong>
+                    {% if result.details %}<span style="font-size: 0.9rem;">{{ result.details }}</span>{% endif %}
+                    
+                    {% if result.appointment %}
+                    <div style="margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(0,0,0,0.1);">
+                        <div class="doctor-badge">Bác sĩ: {{ result.appointment.doctor_name }}</div>
+                        <p style="margin: 5px 0; font-size: 0.9rem;">
+                            <i class="fas fa-hospital"></i> {{ result.appointment.clinic_name }}<br>
+                            <i class="fas fa-calendar"></i> {{ result.appointment.time }}<br>
+                            <i class="fas fa-wallet"></i> Phí: {{ result.appointment.fee }} VNĐ
+                        </p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endif %}
+
+            <div class="card">
+                <h2><i class="fas fa-clipboard-list" style="color: var(--secondary);"></i> Lịch Hẹn Đã Đăng Ký</h2>
+                <div style="margin-top: 1.5rem;">
+                    {% if user_appts %}
+                        {% for appt in user_appts %}
+                        <div class="appt-item">
+                            <div class="appt-info">
+                                <h4>{{ appt.doctor }}</h4>
+                                <p><i class="fas fa-hospital"></i> {{ appt.clinic }}</p>
+                                <p><i class="fas fa-calendar-day"></i> {{ appt.time }}</p>
+                            </div>
+                            <form action="/cancel/{{ appt.id }}" method="POST" onsubmit="return confirm('Bạn có muốn hủy lịch hẹn này?')">
+                                <button type="submit" class="btn-cancel">
+                                    <i class="fas fa-trash"></i> Hủy lịch
+                                </button>
+                            </form>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <div style="text-align: center; padding: 2rem; color: var(--text-muted);">
+                            <i class="fas fa-calendar-xmark" style="font-size: 3rem; opacity: 0.2; margin-bottom: 1rem;"></i>
+                            <p>Bạn chưa có lịch hẹn nào.</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

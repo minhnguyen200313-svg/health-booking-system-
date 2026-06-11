@@ -1,0 +1,6 @@
+clinic_id,name,location_x,location_y,base_fee
+C1,Phòng Khám Đa Khoa Sài Gòn,10,20,150000
+C2,Phòng Khám Y Tế Hà Nội,15,35,200000
+C3,Phòng Khám Gia Đình,5,10,120000
+C4,Bệnh Viện Đa Khoa Quốc Tế,30,40,300000
+C5,Phòng Khám Tâm An,12,15,100000
