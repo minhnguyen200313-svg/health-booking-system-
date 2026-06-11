@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: health-booking-system
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    envVars:
+      - key: PORT
+        value: 5050
+      - key: PYTHON_VERSION
+        value: 3.10.0
